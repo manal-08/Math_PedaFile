@@ -16,7 +16,7 @@
             background: linear-gradient(135deg, #ea580c 0%, #2563eb 100%);
             color: var(--text);
             margin: 0;
-            padding: 10px;
+            padding: 5px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -24,78 +24,75 @@
             box-sizing: border-box;
         }
 
-        /* البطاقة الكبرى بلون زجاجي متناسق */
         .app-card {
             width: 100%;
-            max-width: 900px;
+            max-width: 650px;
             background: rgba(255, 255, 255, 0.22);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 26px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 12px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             box-sizing: border-box;
         }
 
-        /* رأس العنوان الاحترافي */
         .header-brand {
             display: flex;
             justify-content: space-between;
             align-items: center;
             color: white;
-            padding-bottom: 15px;
+            padding-bottom: 10px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            margin-bottom: 25px;
+            margin-bottom: 15px;
         }
         .header-brand-left {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 1.25rem;
+            gap: 10px;
+            font-size: 1.1rem;
             font-weight: bold;
         }
         .header-icon-box {
             background: rgba(255, 255, 255, 0.25);
-            padding: 8px;
-            border-radius: 12px;
+            padding: 6px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         .header-brand-right {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: bold;
         }
 
-        /* صفحة الرفع الأولى */
         .page-1 {
             background: rgba(255, 255, 255, 0.22);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 35px 20px;
-            border-radius: 20px;
+            padding: 25px 15px;
+            border-radius: 16px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            max-width: 420px;
-            margin: 20px auto;
+            max-width: 400px;
+            margin: 15px auto;
             text-align: center;
         }
-        .main-title { color: #ffffff; font-size: 1.35rem; font-weight: 800; margin-bottom: 6px; }
-        .sub-title { color: #ffedd5; font-size: 0.9rem; margin-bottom: 25px; }
+        .main-title { color: #ffffff; font-size: 1.25rem; font-weight: 800; margin-bottom: 6px; }
+        .sub-title { color: #ffedd5; font-size: 0.85rem; margin-bottom: 20px; }
 
         .upload-square {
             background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            border-radius: 16px;
-            padding: 28px 15px;
+            border-radius: 14px;
+            padding: 22px 12px;
             color: white;
             cursor: pointer;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            max-width: 220px;
-            margin: 0 auto 20px auto;
+            max-width: 200px;
+            margin: 0 auto 15px auto;
             border: 2px dashed rgba(255,255,255,0.6);
         }
         .upload-square input { display: none; }
@@ -104,127 +101,134 @@
             background: rgba(255, 255, 255, 0.85);
             color: #334155;
             font-weight: bold;
-            font-size: 1rem;
-            padding: 12px 20px;
-            border-radius: 12px;
+            font-size: 0.95rem;
+            padding: 10px 16px;
+            border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.6);
             cursor: pointer;
             width: 100%;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-top: 8px;
+            margin-top: 6px;
         }
 
-        /* زر الطباعة بلون مدرج بين الأزرق والبرتقالي */
         .btn-print-final {
             background: linear-gradient(135deg, #2563eb 0%, #ea580c 100%);
             color: white;
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: bold;
-            padding: 14px 20px;
-            border-radius: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
             border: none;
             cursor: pointer;
             width: 100%;
             box-shadow: 0 6px 15px rgba(0,0,0,0.25);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             display: none;
         }
         .btn-print-final:hover { opacity: 0.92; }
 
-        /* حاوية المعاينة والبطاقات الداخلية */
         .step-container {
             display: none;
             background: rgba(255, 255, 255, 0.22);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 18px;
-            border-radius: 20px;
+            padding: 10px;
+            border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        /* ورقة A4 أفقية مقصرة في المعاينة لتناسب الشاشة */
+        .preview-mode .side-col {
+            display: none !important;
+        }
+        .preview-mode .contenu-col {
+            width: 100% !important;
+        }
+
+        /* إطار المعاينة مقيد تماماً بحدود الطباعة مع تنبيه بصري (خط أحمر منقط) لأي تجاوز */
         .a4-sheet {
             width: 100%;
-            background: white;
-            border: 2px solid #1e293b;
-            border-radius: 10px;
-            margin-bottom: 12px;
+            max-width: 580px;
+            height: 400px; /* الارتفاع الدقيق المماثل لصفحة الطباعة */
+            background: #ffffff;
+            border: 2px solid #000000;
+            margin: 0 auto 15px auto;
             box-sizing: border-box;
-            overflow: hidden;
-            max-height: 480px;
+            position: relative;
+            overflow: visible; /* يسمح برؤية أي تجاوز خارج الحدود لتعرفي أنك خرجتِ عن نطاق الطباعة */
         }
 
         .jadada-table {
             width: 100%;
+            height: 100%;
             border-collapse: collapse;
             table-layout: fixed;
         }
 
         .jadada-table th, .jadada-table td {
-            border: 1px solid #1e293b;
+            border: 1px solid #000000;
             padding: 4px;
             vertical-align: top;
             word-wrap: break-word;
-            background: #ffffff !important;
         }
 
-        .jadada-header {
-            background: #e0f2fe !important;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
+        .jadada-header th {
+            background-color: #bae6fd !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color: #0f172a !important;
             font-weight: bold;
             text-align: center;
             font-size: 11px;
             height: 26px;
-            white-space: nowrap;
+            vertical-align: middle;
         }
 
+        /* مساحة المحتوى مطابقة تماماً لما سيتم طباعته، وإذا خرجت الشريحة ستظهر خارج هذا الإطار */
         .content-cell {
-            height: 380px;
+            height: 365px;
+            max-height: 365px;
             position: relative;
-            overflow-y: auto;
+            overflow: visible; /* لكي تري بوضوح إذا خرجت الشريحة عن الحد المسموح */
             padding: 6px !important;
             text-align: left !important;
-            background: #ffffff !important;
+            background: #ffffff;
+            /* حد أحمر سفلي يوضح نهاية حدود الطباعة تماماً */
+            border-bottom: 2.5px dashed #ef4444; 
         }
 
         .slide-item-simple {
             position: relative;
-            margin-bottom: 8px;
-            border: 1.5px dashed #cbd5e1;
-            border-radius: 6px;
+            margin-bottom: 4px;
+            border: 1px dashed #94a3b8;
+            border-radius: 3px;
             box-sizing: border-box;
             text-align: left !important;
-            background: #ffffff !important;
+            background: transparent;
         }
 
         .slide-item-simple img {
             height: auto;
             display: block;
             margin: 0;
-            width: 88%;
-            background: #ffffff !important;
         }
 
         .slide-controls {
             display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            background: #1e293b;
+            background: rgba(30, 41, 59, 0.9);
             color: white;
-            padding: 3px 6px;
+            padding: 2px 6px;
             font-size: 10px;
-            border-radius: 4px 4px 0 0;
-            gap: 3px;
+            border-radius: 2px 2px 0 0;
         }
-        .ctrl-btns { display: flex; gap: 3px; align-items: center; flex-wrap: wrap; }
+        .ctrl-btns { display: flex; gap: 3px; align-items: center; }
         .ctrl-btns button {
             background: #3b82f6;
             color: white;
             border: none;
-            padding: 2px 5px;
-            border-radius: 4px;
+            padding: 1px 5px;
+            border-radius: 3px;
             font-size: 10px;
             font-weight: bold;
             cursor: pointer;
@@ -232,37 +236,35 @@
         .ctrl-btns button:hover { background: #2563eb; }
         .btn-crop-modal { background: #f59e0b !important; }
 
-        /* شريط أزرار التنقل مع تصغير خط العداد ليظهر في سطر واحد تماماً */
         .pagination-bar-card {
             display: flex;
             justify-content: space-between;
             align-items: center;
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(8px);
-            padding: 10px;
-            border-radius: 12px;
-            margin-top: 10px;
-            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 10px;
+            margin-top: 8px;
+            margin-bottom: 8px;
             border: 1px solid rgba(255, 255, 255, 0.4);
-            gap: 5px;
+            gap: 4px;
         }
         .page-nav-btn {
             background: rgba(255, 255, 255, 0.85);
             color: #1e293b;
             border: 1px solid rgba(255, 255, 255, 0.6);
-            padding: 8px 12px;
+            padding: 6px 10px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             white-space: nowrap;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         .page-nav-btn:hover { background: #ffffff; }
         .page-nav-btn:disabled { background: rgba(255, 255, 255, 0.4); color: #64748b; cursor: not-allowed; }
 
         #pageIndicator {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: bold;
             color: #ffffff;
             white-space: nowrap;
@@ -274,11 +276,10 @@
             background: rgba(255, 255, 255, 0.85);
             color: #334155;
             border: 1px solid rgba(255, 255, 255, 0.6);
-            margin-top: 5px;
+            margin-top: 4px;
         }
         .hidden { display: none !important; }
 
-        /* نافذة القص (Modal) */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -287,101 +288,127 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            padding: 15px;
+            padding: 10px;
         }
         .modal-box {
             background: white;
-            border-radius: 16px;
+            border-radius: 14px;
             width: 100%;
-            max-width: 500px;
-            padding: 18px;
+            max-width: 450px;
+            padding: 15px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             text-align: center;
         }
-        .modal-title { font-size: 1.1rem; font-weight: bold; color: #1e293b; margin-bottom: 12px; }
+        .modal-title { font-size: 1rem; font-weight: bold; color: #1e293b; margin-bottom: 10px; }
         .modal-crop-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
+            gap: 5px;
             background: #f1f5f9;
-            padding: 8px;
-            border-radius: 10px;
-            margin-bottom: 12px;
+            padding: 6px;
+            border-radius: 8px;
+            margin-bottom: 10px;
         }
-        .modal-crop-item label { display: block; font-size: 0.7rem; font-weight: bold; margin-bottom: 3px; color: #334155; }
-        .modal-crop-ctrl { display: flex; align-items: center; justify-content: space-between; background: white; border: 1px solid #cbd5e1; border-radius: 6px; padding: 2px; }
-        .modal-crop-ctrl button { background: #2563eb; color: white; border: none; border-radius: 4px; width: 20px; height: 20px; font-weight: bold; cursor: pointer; }
-        .modal-crop-ctrl input { width: 26px; text-align: center; border: none; font-weight: bold; font-size: 0.8rem; outline: none; }
-        .modal-canvas-wrap { width: 100%; height: 220px; background: #ffffff; border-radius: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden; margin-bottom: 12px; border: 1px solid #94a3b8; }
-        .modal-canvas-wrap canvas { max-width: 100%; max-height: 100%; object-fit: contain; background: white; }
-        .modal-actions { display: flex; gap: 10px; }
-        .btn-save-modal { flex: 2; background: #16a34a; color: white; border: none; padding: 10px; border-radius: 10px; font-weight: bold; cursor: pointer; }
-        .btn-cancel-modal { flex: 1; background: #ef4444; color: white; border: none; padding: 10px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .modal-crop-item label { display: block; font-size: 0.65rem; font-weight: bold; margin-bottom: 2px; color: #334155; }
+        .modal-crop-ctrl { display: flex; align-items: center; justify-content: space-between; background: white; border: 1px solid #cbd5e1; border-radius: 5px; padding: 1px; }
+        .modal-crop-ctrl button { background: #2563eb; color: white; border: none; border-radius: 3px; width: 18px; height: 18px; font-weight: bold; cursor: pointer; }
+        .modal-crop-ctrl input { width: 22px; text-align: center; border: none; font-weight: bold; font-size: 0.75rem; outline: none; }
+        .modal-canvas-wrap { width: 100%; height: 200px; background: #e2e8f0; border-radius: 8px; display: flex; justify-content: center; align-items: center; overflow: hidden; margin-bottom: 10px; border: 1px solid #94a3b8; }
+        .modal-canvas-wrap canvas { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .modal-actions { display: flex; gap: 8px; }
+        .btn-save-modal { flex: 2; background: #16a34a; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .btn-cancel-modal { flex: 1; background: #ef4444; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
-        /* إعدادات الطباعة: A4 أفقية بالكامل */
+        /* إعدادات الطباعة الدقيقة (A4 Landscape) مع إخفاء الخط الأحمر التنبيهي وعودة الجدول كاملاً */
         @media print {
             @page {
                 size: A4 landscape;
                 margin: 5mm;
             }
-            body { background: white !important; padding: 0 !important; margin: 0 !important; display: block !important; }
-            .app-card { background: white !important; border: none !important; box-shadow: none !important; padding: 0 !important; max-width: 100% !important; width: 100% !important; }
-            .step-container { padding: 0 !important; margin: 0 !important; box-shadow: none !important; background: white !important; border: none !important; }
-            .no-print, .slide-controls, .pagination-bar-card, .btn-action, .modal-overlay, .header-brand { display: none !important; }
-            
-            .a4-sheet {
+            body {
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                display: block !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .app-card, .step-container {
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                display: block !important;
+            }
+            .no-print, .slide-controls, .pagination-bar-card, .btn-action, .modal-overlay, .header-brand {
                 display: none !important;
             }
-            .a4-sheet.print-active {
-                display: block !important;
-                border: 1.5px solid #000 !important;
-                margin: 0 !important;
-                height: 192mm !important;
-                max-height: none !important;
-                page-break-after: always;
-                break-after: page;
+            .preview-mode .side-col {
+                display: table-cell !important;
             }
-            .a4-sheet.print-active:last-of-type {
+            .preview-mode .contenu-col {
+                width: 61% !important;
+            }
+            .a4-sheet {
+                display: block !important;
+                width: 287mm !important;
+                height: 185mm !important;
+                max-width: unset !important;
+                margin: 0 !important;
+                border: 1.5px solid #000000 !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                overflow: hidden !important;
+            }
+            .a4-sheet:last-of-type {
                 page-break-after: auto !important;
                 break-after: auto !important;
-                margin-bottom: 0 !important;
             }
-            .content-cell { height: 182mm !important; background: white !important; overflow: visible !important; }
-            .slide-item-simple { border: none !important; margin-bottom: 6px !important; background: white !important; }
+            .content-cell {
+                height: calc(185mm - 26px) !important;
+                max-height: none !important;
+                border-bottom: 1px solid #000000 !important; /* إزالة الخط الأحمر عند الطباعة */
+            }
+            .slide-item-simple {
+                border: none !important;
+                margin-bottom: 3px !important;
+            }
         }
     </style>
 </head>
 <body>
 
 <div class="app-card">
-    <!-- رأس العنوان الاحترافي -->
     <div class="header-brand">
         <div class="header-brand-left">
             <div class="header-icon-box">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
             </div>
             Math_PedaFile
         </div>
         <div class="header-brand-right">∑</div>
     </div>
 
-    <!-- صفحة الرفع الأولى -->
     <div id="page1" class="page-1 no-print">
         <div class="main-title">منصة إعداد الجذاذات</div>
         <div class="sub-title">الخاص بالدرس PDF المرجو رفع ملف الـ</div>
         
         <label class="upload-square" for="pdfFile">
-            <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-            <span style="font-weight: bold; font-size: 1.1rem;">Upload PDF</span>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            <span style="font-weight: bold; font-size: 1rem;">Upload PDF</span>
             <input type="file" id="pdfFile" accept=".pdf">
         </label>
         
-        <div id="fileInfo" style="margin-bottom: 12px; font-weight: bold; color: #dcfce7; font-size: 0.9rem;" class="hidden">✅ تم اختيار الملف بنجاح</div>
-        <button id="continueBtn" class="btn-action hidden" onclick="startApp()">معالجة وعرض الجذاذة ➔</button>
+        <div id="fileInfo" style="margin-bottom: 10px; font-weight: bold; color: #dcfce7; font-size: 0.85rem;" class="hidden">✅ تم اختيار الملف بنجاح</div>
+        <button id="continueBtn" class="btn-action hidden" onclick="startApp()">معالجة وإزالة الفراغات البيضاء ➔</button>
     </div>
 
-    <!-- قسم المعاينة والتحكم -->
-    <div id="pageApp" class="step-container">
+    <div id="pageApp" class="step-container preview-mode">
         <div id="appContainer"></div>
 
         <div class="pagination-bar-card no-print">
@@ -390,13 +417,11 @@
             <button class="page-nav-btn" id="nextBtn" onclick="changePreviewPage(1)">Suivant</button>
         </div>
 
-        <!-- زر الطباعة يظهر في الصفحة الأخيرة -->
         <button id="printBtn" class="btn-print-final no-print" onclick="printAllSheets()">imprimer Fiche pédagogique</button>
         <button class="btn-action btn-back no-print" onclick="location.reload()">رفع ملف آخر 🔄</button>
     </div>
 </div>
 
-<!-- نافذة القص (Modal) -->
 <div id="cropModal" class="modal-overlay hidden no-print">
     <div class="modal-box">
         <div class="modal-title" id="modalTitle">قص الشريحة</div>
@@ -468,6 +493,53 @@
         }
     });
 
+    function autoTrimWhiteMargins(sourceCanvas) {
+        const w = sourceCanvas.width;
+        const h = sourceCanvas.height;
+        const ctx = sourceCanvas.getContext('2d');
+        const imgData = ctx.getImageData(0, 0, w, h).data;
+
+        let top = h, bottom = 0, left = w, right = 0;
+        let hasContent = false;
+
+        for (let y = 0; y < h; y++) {
+            for (let x = 0; x < w; x++) {
+                const idx = (y * w + x) * 4;
+                const r = imgData[idx];
+                const g = imgData[idx + 1];
+                const b = imgData[idx + 2];
+                const a = imgData[idx + 3];
+
+                if (a > 10 && (r < 248 || g < 248 || b < 248)) {
+                    hasContent = true;
+                    if (y < top) top = y;
+                    if (y > bottom) bottom = y;
+                    if (x < left) left = x;
+                    if (x > right) right = x;
+                }
+            }
+        }
+
+        if (!hasContent) return sourceCanvas;
+
+        const pad = 6;
+        top = Math.max(0, top - pad);
+        bottom = Math.min(h - 1, bottom + pad);
+        left = Math.max(0, left - pad);
+        right = Math.min(w - 1, right + pad);
+
+        const trimW = right - left + 1;
+        const trimH = bottom - top + 1;
+
+        const trimmedCanvas = document.createElement('canvas');
+        trimmedCanvas.width = trimW;
+        trimmedCanvas.height = trimH;
+        const tCtx = trimmedCanvas.getContext('2d');
+        tCtx.drawImage(sourceCanvas, left, top, trimW, trimH, 0, 0, trimW, trimH);
+
+        return trimmedCanvas;
+    }
+
     function getCroppedUrl(rawCanvas, crop) {
         let w = rawCanvas.width;
         let h = rawCanvas.height;
@@ -483,8 +555,6 @@
         outCanvas.width = newW;
         outCanvas.height = newH;
         let ctx = outCanvas.getContext('2d');
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(0, 0, newW, newH);
         ctx.drawImage(rawCanvas, cL, cT, newW, newH, 0, 0, newW, newH);
         return outCanvas.toDataURL('image/png');
     }
@@ -502,25 +572,24 @@
         for (let pNum = startP; pNum <= totalPages; pNum++) {
             let page = await pdf.getPage(pNum);
             let viewport = page.getViewport({ scale: 1.8 });
-            let rawCanvas = document.createElement('canvas');
-            let ctx = rawCanvas.getContext('2d');
-            rawCanvas.height = viewport.height;
-            rawCanvas.width = viewport.width;
-
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(0, 0, rawCanvas.width, rawCanvas.height);
+            let tempCanvas = document.createElement('canvas');
+            let ctx = tempCanvas.getContext('2d');
+            tempCanvas.height = viewport.height;
+            tempCanvas.width = viewport.width;
 
             await page.render({ canvasContext: ctx, viewport: viewport }).promise;
 
+            let trimmedCanvas = autoTrimWhiteMargins(tempCanvas);
+
             let initialCrop = { left: 0, right: 0, top: 0, bottom: 0 };
-          let croppedUrl = getCroppedUrl(rawCanvas, initialCrop);
+            let croppedUrl = getCroppedUrl(trimmedCanvas, initialCrop);
 
             slidesModel.push({
                 id: pNum,
-                rawCanvas: rawCanvas,
+                rawCanvas: trimmedCanvas,
                 crop: initialCrop,
                 croppedUrl: croppedUrl,
-                widthPct: 88,
+                widthPct: 78,
                 offsetY: 0
             });
         }
@@ -544,9 +613,6 @@
 
             const sheet = document.createElement('div');
             sheet.className = 'a4-sheet';
-            if (sheetIdx === currentPreviewPage) {
-                sheet.classList.add('print-active');
-            }
 
             let slidesHTML = "";
             for (let j = 0; j < currentCount; j++) {
@@ -559,8 +625,8 @@
                         <span>شريحة ${s.id}</span>
                         <div class="ctrl-btns">
                             <button type="button" class="btn-crop-modal" onclick="openCropModal(${idx})">✂️ قص</button>
-                            <button type="button" onclick="appResize(${idx}, 5)">➕</button>
-                            <button type="button" onclick="appResize(${idx}, -5)">➖</button>
+                            <button type="button" onclick="appResize(${idx}, 4)">➕</button>
+                            <button type="button" onclick="appResize(${idx}, -4)">➖</button>
                             <button type="button" onclick="appMove(${idx}, -8)">⬆️</button>
                             <button type="button" onclick="appMove(${idx}, 8)">⬇️</button>
                         </div>
@@ -573,22 +639,22 @@
                 <table class="jadada-table">
                     <thead>
                         <tr class="jadada-header">
-                            <th style="width: 7%;">Séance</th>
-                            <th style="width: 7%;">Durée</th>
-                            <th style="width: 61%;">Contenu (Éléments du cours)</th>
-                            <th style="width: 10%;">Rôle Ens.</th>
-                            <th style="width: 10%;">Rôle App.</th>
-                            <th style="width: 5%;">Obs.</th>
+                            <th class="side-col" style="width: 7%;">Séance</th>
+                            <th class="side-col" style="width: 7%;">Durée</th>
+                            <th class="contenu-col" style="width: 61%;">Contenu (Éléments du cours)</th>
+                            <th class="side-col" style="width: 10%;">Rôle Ens.</th>
+                            <th class="side-col" style="width: 10%;">Rôle App.</th>
+                            <th class="side-col" style="width: 5%;">Obs.</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td contenteditable="true" style="text-align:center; font-weight:bold; background:white;"></td>
-                            <td contenteditable="true" style="background:white;"></td>
-                            <td class="content-cell">${slidesHTML}</td>
-                            <td contenteditable="true" style="background:white;"></td>
-                            <td contenteditable="true" style="background:white;"></td>
-                            <td contenteditable="true" style="background:white;"></td>
+                            <td class="side-col" contenteditable="true" style="text-align:center; font-weight:bold;"></td>
+                            <td class="side-col" contenteditable="true"></td>
+                            <td class="contenu-col content-cell">${slidesHTML}</td>
+                            <td class="side-col" contenteditable="true"></td>
+                            <td class="side-col" contenteditable="true"></td>
+                            <td class="side-col" contenteditable="true"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -607,10 +673,8 @@
         sheets.forEach((sheet, idx) => {
             if (idx === currentPreviewPage) {
                 sheet.style.display = 'block';
-                sheet.classList.add('print-active');
             } else {
                 sheet.style.display = 'none';
-                sheet.classList.remove('print-active');
             }
         });
 
@@ -636,17 +700,11 @@
     }
 
     function printAllSheets() {
-        const sheets = document.querySelectorAll('.a4-sheet');
-        sheets.forEach(sheet => {
-            sheet.classList.add('print-active');
-            sheet.style.display = 'block';
-        });
         window.print();
-        updateViewVisibility();
     }
 
     function appResize(idx, delta) {
-        slidesModel[idx].widthPct = Math.max(30, Math.min(100, slidesModel[idx].widthPct + delta));
+        slidesModel[idx].widthPct = Math.max(25, Math.min(100, slidesModel[idx].widthPct + delta));
         renderAppUI();
     }
 
@@ -701,8 +759,6 @@
         canvas.width = newW;
         canvas.height = newH;
         let ctx = canvas.getContext('2d');
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(0, 0, newW, newH);
         ctx.drawImage(raw, cL, cT, newW, newH, 0, 0, newW, newH);
     }
 
