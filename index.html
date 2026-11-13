@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math_PedaFile</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #ea580c 0%, #2563eb 100%);
+            color: var(--text);
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        /* البطاقة الكبرى بلون زجاجي متناسق */
+        .app-card {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.22);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 26px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            box-sizing: border-box;
+        }
+
+        /* رأس العنوان الاحترافي */
+        .header-brand {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 25px;
+        }
+        .header-brand-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+        .header-icon-box {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 8px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header-brand-right {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* صفحة الرفع الأولى */
+        .page-1 {
+            background: rgba(255, 255, 255, 0.22);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 35px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            max-width: 420px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .main-title { color: #ffffff; font-size: 1.35rem; font-weight: 800; margin-bottom: 6px; }
+        .sub-title { color: #ffedd5; font-size: 0.9rem; margin-bottom: 25px; }
+
+        .upload-square {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 16px;
+            padding: 28px 15px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            max-width: 220px;
+            margin: 0 auto 20px auto;
+            border: 2px dashed rgba(255,255,255,0.6);
+        }
+        .upload-square input { display: none; }
+
+        .btn-action {
+            background: rgba(255, 255, 255, 0.85);
+            color: #334155;
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 8px;
+        }
+
+        /* زر الطباعة بلون مدرج بين الأزرق والبرتقالي */
+        .btn-print-final {
+            background: linear-gradient(135deg, #2563eb 0%, #ea580c 100%);
+            color: white;
+            font-size: 1.05rem;
+            font-weight: bold;
+            padding: 14px 20px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+            margin-bottom: 12px;
+            display: none;
+        }
+        .btn-print-final:hover { opacity: 0.92; }
+
+        /* حاوية المعاينة والبطاقات الداخلية */
+        .step-container {
+            display: none;
+            background: rgba(255, 255, 255, 0.22);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 18px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* ورقة A4 أفقية مقصرة في المعاينة لتناسب الشاشة */
+        .a4-sheet {
+            width: 100%;
+            background: white;
+            border: 2px solid #1e293b;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+            overflow: hidden;
+            max-height: 480px;
+        }
+
+        .jadada-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .jadada-table th, .jadada-table td {
+            border: 1px solid #1e293b;
+            padding: 4px;
+            vertical-align: top;
+            word-wrap: break-word;
+            background: #ffffff !important;
+        }
+
+        .jadada-header {
+            background: #e0f2fe !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            font-weight: bold;
+            text-align: center;
+            font-size: 11px;
+            height: 26px;
+            white-space: nowrap;
+        }
+
+        .content-cell {
+            height: 380px;
+            position: relative;
+            overflow-y: auto;
+            padding: 6px !important;
+            text-align: left !important;
+            background: #ffffff !important;
+        }
+
+        .slide-item-simple {
+            position: relative;
+            margin-bottom: 8px;
+            border: 1.5px dashed #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box;
+            text-align: left !important;
+            background: #ffffff !important;
+        }
+
+        .slide-item-simple img {
+            height: auto;
+            display: block;
+            margin: 0;
+            width: 88%;
+            background: #ffffff !important;
+        }
+
+        .slide-controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            background: #1e293b;
+            color: white;
+            padding: 3px 6px;
+            font-size: 10px;
+            border-radius: 4px 4px 0 0;
+            gap: 3px;
+        }
+        .ctrl-btns { display: flex; gap: 3px; align-items: center; flex-wrap: wrap; }
+        .ctrl-btns button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .ctrl-btns button:hover { background: #2563eb; }
+        .btn-crop-modal { background: #f59e0b !important; }
+
+        /* شريط أزرار التنقل مع تصغير خط العداد ليظهر في سطر واحد تماماً */
+        .pagination-bar-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+            padding: 10px;
+            border-radius: 12px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            gap: 5px;
+        }
+        .page-nav-btn {
+            background: rgba(255, 255, 255, 0.85);
+            color: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .page-nav-btn:hover { background: #ffffff; }
+        .page-nav-btn:disabled { background: rgba(255, 255, 255, 0.4); color: #64748b; cursor: not-allowed; }
+
+        #pageIndicator {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #ffffff;
+            white-space: nowrap;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.85);
+            color: #334155;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            margin-top: 5px;
+        }
+        .hidden { display: none !important; }
+
+        /* نافذة القص (Modal) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 15px;
+        }
+        .modal-box {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 500px;
+            padding: 18px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+        .modal-title { font-size: 1.1rem; font-weight: bold; color: #1e293b; margin-bottom: 12px; }
+        .modal-crop-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            background: #f1f5f9;
+            padding: 8px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+        .modal-crop-item label { display: block; font-size: 0.7rem; font-weight: bold; margin-bottom: 3px; color: #334155; }
+        .modal-crop-ctrl { display: flex; align-items: center; justify-content: space-between; background: white; border: 1px solid #cbd5e1; border-radius: 6px; padding: 2px; }
+        .modal-crop-ctrl button { background: #2563eb; color: white; border: none; border-radius: 4px; width: 20px; height: 20px; font-weight: bold; cursor: pointer; }
+        .modal-crop-ctrl input { width: 26px; text-align: center; border: none; font-weight: bold; font-size: 0.8rem; outline: none; }
+        .modal-canvas-wrap { width: 100%; height: 220px; background: #ffffff; border-radius: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden; margin-bottom: 12px; border: 1px solid #94a3b8; }
+        .modal-canvas-wrap canvas { max-width: 100%; max-height: 100%; object-fit: contain; background: white; }
+        .modal-actions { display: flex; gap: 10px; }
+        .btn-save-modal { flex: 2; background: #16a34a; color: white; border: none; padding: 10px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .btn-cancel-modal { flex: 1; background: #ef4444; color: white; border: none; padding: 10px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+
+        /* إعدادات الطباعة: A4 أفقية بالكامل */
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 5mm;
+            }
+            body { background: white !important; padding: 0 !important; margin: 0 !important; display: block !important; }
+            .app-card { background: white !important; border: none !important; box-shadow: none !important; padding: 0 !important; max-width: 100% !important; width: 100% !important; }
+            .step-container { padding: 0 !important; margin: 0 !important; box-shadow: none !important; background: white !important; border: none !important; }
+            .no-print, .slide-controls, .pagination-bar-card, .btn-action, .modal-overlay, .header-brand { display: none !important; }
+            
+            .a4-sheet {
+                display: none !important;
+            }
+            .a4-sheet.print-active {
+                display: block !important;
+                border: 1.5px solid #000 !important;
+                margin: 0 !important;
+                height: 192mm !important;
+                max-height: none !important;
+                page-break-after: always;
+                break-after: page;
+            }
+            .a4-sheet.print-active:last-of-type {
+                page-break-after: auto !important;
+                break-after: auto !important;
+                margin-bottom: 0 !important;
+            }
+            .content-cell { height: 182mm !important; background: white !important; overflow: visible !important; }
+            .slide-item-simple { border: none !important; margin-bottom: 6px !important; background: white !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-card">
+    <!-- رأس العنوان الاحترافي -->
+    <div class="header-brand">
+        <div class="header-brand-left">
+            <div class="header-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            Math_PedaFile
+        </div>
+        <div class="header-brand-right">∑</div>
+    </div>
+
+    <!-- صفحة الرفع الأولى -->
+    <div id="page1" class="page-1 no-print">
+        <div class="main-title">منصة إعداد الجذاذات</div>
+        <div class="sub-title">الخاص بالدرس PDF المرجو رفع ملف الـ</div>
+        
+        <label class="upload-square" for="pdfFile">
+            <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            <span style="font-weight: bold; font-size: 1.1rem;">Upload PDF</span>
+            <input type="file" id="pdfFile" accept=".pdf">
+        </label>
+        
+        <div id="fileInfo" style="margin-bottom: 12px; font-weight: bold; color: #dcfce7; font-size: 0.9rem;" class="hidden">✅ تم اختيار الملف بنجاح</div>
+        <button id="continueBtn" class="btn-action hidden" onclick="startApp()">معالجة وعرض الجذاذة ➔</button>
+    </div>
+
+    <!-- قسم المعاينة والتحكم -->
+    <div id="pageApp" class="step-container">
+        <div id="appContainer"></div>
+
+        <div class="pagination-bar-card no-print">
+            <button class="page-nav-btn" id="prevBtn" onclick="changePreviewPage(-1)">Precedent</button>
+            <span id="pageIndicator">الصفحة 1 من 1</span>
+            <button class="page-nav-btn" id="nextBtn" onclick="changePreviewPage(1)">Suivant</button>
+        </div>
+
+        <!-- زر الطباعة يظهر في الصفحة الأخيرة -->
+        <button id="printBtn" class="btn-print-final no-print" onclick="printAllSheets()">imprimer Fiche pédagogique</button>
+        <button class="btn-action btn-back no-print" onclick="location.reload()">رفع ملف آخر 🔄</button>
+    </div>
+</div>
+
+<!-- نافذة القص (Modal) -->
+<div id="cropModal" class="modal-overlay hidden no-print">
+    <div class="modal-box">
+        <div class="modal-title" id="modalTitle">قص الشريحة</div>
+        
+        <div class="modal-crop-grid">
+            <div class="modal-crop-item">
+                <label>Left (يسار)</label>
+                <div class="modal-crop-ctrl">
+                    <button type="button" onclick="stepCrop('left', -1)">-</button>
+                    <input type="number" id="cLeft" value="0" min="0" max="45" oninput="updateModalCanvas()">
+                    <button type="button" onclick="stepCrop('left', 1)">+</button>
+                </div>
+            </div>
+            <div class="modal-crop-item">
+                <label>Right (يمين)</label>
+                <div class="modal-crop-ctrl">
+                    <button type="button" onclick="stepCrop('right', -1)">-</button>
+                    <input type="number" id="cRight" value="0" min="0" max="45" oninput="updateModalCanvas()">
+                    <button type="button" onclick="stepCrop('right', 1)">+</button>
+                </div>
+            </div>
+            <div class="modal-crop-item">
+                <label>Haut (أعلى)</label>
+                <div class="modal-crop-ctrl">
+                    <button type="button" onclick="stepCrop('top', -1)">-</button>
+                    <input type="number" id="cTop" value="0" min="0" max="45" oninput="updateModalCanvas()">
+                    <button type="button" onclick="stepCrop('top', 1)">+</button>
+                </div>
+            </div>
+            <div class="modal-crop-item">
+                <label>Bas (أسفل)</label>
+                <div class="modal-crop-ctrl">
+                    <button type="button" onclick="stepCrop('bottom', -1)">-</button>
+                    <input type="number" id="cBottom" value="0" min="0" max="45" oninput="updateModalCanvas()">
+                    <button type="button" onclick="stepCrop('bottom', 1)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-canvas-wrap">
+            <canvas id="modalCanvas"></canvas>
+        </div>
+
+        <div class="modal-actions">
+            <button type="button" class="btn-save-modal" onclick="saveCropModal()">✅ OK (حفظ)</button>
+            <button type="button" class="btn-cancel-modal" onclick="closeCropModal()">إلغاء</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let pdfBytesData = null;
+    let slidesModel = [];
+    let currentPreviewPage = 0;
+    let editingIdx = null;
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+    document.getElementById('pdfFile').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                pdfBytesData = event.target.result;
+                document.getElementById('fileInfo').classList.remove('hidden');
+                document.getElementById('continueBtn').classList.remove('hidden');
+            };
+            reader.readAsArrayBuffer(file);
+        }
+    });
+
+    function getCroppedUrl(rawCanvas, crop) {
+        let w = rawCanvas.width;
+        let h = rawCanvas.height;
+        let cL = Math.round((crop.left / 100) * w);
+        let cR = Math.round((crop.right / 100) * w);
+        let cT = Math.round((crop.top / 100) * h);
+        let cB = Math.round((crop.bottom / 100) * h);
+
+        let newW = Math.max(20, w - cL - cR);
+        let newH = Math.max(20, h - cT - cB);
+
+        let outCanvas = document.createElement('canvas');
+        outCanvas.width = newW;
+        outCanvas.height = newH;
+        let ctx = outCanvas.getContext('2d');
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, newW, newH);
+        ctx.drawImage(rawCanvas, cL, cT, newW, newH, 0, 0, newW, newH);
+        return outCanvas.toDataURL('image/png');
+    }
+
+    async function startApp() {
+        document.getElementById('page1').style.display = 'none';
+        document.getElementById('pageApp').style.display = 'block';
+
+        const pdf = await pdfjsLib.getDocument({data: pdfBytesData}).promise;
+        const totalPages = pdf.numPages;
+        slidesModel = [];
+
+        let startP = totalPages > 1 ? 2 : 1;
+
+        for (let pNum = startP; pNum <= totalPages; pNum++) {
+            let page = await pdf.getPage(pNum);
+            let viewport = page.getViewport({ scale: 1.8 });
+            let rawCanvas = document.createElement('canvas');
+            let ctx = rawCanvas.getContext('2d');
+            rawCanvas.height = viewport.height;
+            rawCanvas.width = viewport.width;
+
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, rawCanvas.width, rawCanvas.height);
+
+            await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+
+            let initialCrop = { left: 0, right: 0, top: 0, bottom: 0 };
+          let croppedUrl = getCroppedUrl(rawCanvas, initialCrop);
+
+            slidesModel.push({
+                id: pNum,
+                rawCanvas: rawCanvas,
+                crop: initialCrop,
+                croppedUrl: croppedUrl,
+                widthPct: 88,
+                offsetY: 0
+            });
+        }
+
+        currentPreviewPage = 0;
+        renderAppUI();
+    }
+
+    function renderAppUI() {
+        const container = document.getElementById('appContainer');
+        container.innerHTML = "";
+
+        let slidesPerPage = 2;
+        let totalSheets = Math.ceil(slidesModel.length / slidesPerPage);
+        if (currentPreviewPage >= totalSheets) currentPreviewPage = totalSheets - 1;
+        if (currentPreviewPage < 0) currentPreviewPage = 0;
+
+        for (let sheetIdx = 0; sheetIdx < totalSheets; sheetIdx++) {
+            let i = sheetIdx * slidesPerPage;
+            let currentCount = Math.min(slidesPerPage, slidesModel.length - i);
+
+            const sheet = document.createElement('div');
+            sheet.className = 'a4-sheet';
+            if (sheetIdx === currentPreviewPage) {
+                sheet.classList.add('print-active');
+            }
+
+            let slidesHTML = "";
+            for (let j = 0; j < currentCount; j++) {
+                let idx = i + j;
+                let s = slidesModel[idx];
+
+                slidesHTML += `
+                <div class="slide-item-simple" data-idx="${idx}" style="transform: translateY(${s.offsetY}px);">
+                    <div class="slide-controls no-print">
+                        <span>شريحة ${s.id}</span>
+                        <div class="ctrl-btns">
+                            <button type="button" class="btn-crop-modal" onclick="openCropModal(${idx})">✂️ قص</button>
+                            <button type="button" onclick="appResize(${idx}, 5)">➕</button>
+                            <button type="button" onclick="appResize(${idx}, -5)">➖</button>
+                            <button type="button" onclick="appMove(${idx}, -8)">⬆️</button>
+                            <button type="button" onclick="appMove(${idx}, 8)">⬇️</button>
+                        </div>
+                    </div>
+                    <img id="app-img-${idx}" src="${s.croppedUrl}" style="width: ${s.widthPct}%;" />
+                </div>`;
+            }
+
+            sheet.innerHTML = `
+                <table class="jadada-table">
+                    <thead>
+                        <tr class="jadada-header">
+                            <th style="width: 7%;">Séance</th>
+                            <th style="width: 7%;">Durée</th>
+                            <th style="width: 61%;">Contenu (Éléments du cours)</th>
+                            <th style="width: 10%;">Rôle Ens.</th>
+                            <th style="width: 10%;">Rôle App.</th>
+                            <th style="width: 5%;">Obs.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td contenteditable="true" style="text-align:center; font-weight:bold; background:white;"></td>
+                            <td contenteditable="true" style="background:white;"></td>
+                            <td class="content-cell">${slidesHTML}</td>
+                            <td contenteditable="true" style="background:white;"></td>
+                            <td contenteditable="true" style="background:white;"></td>
+                            <td contenteditable="true" style="background:white;"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            `;
+            container.appendChild(sheet);
+        }
+
+        updateViewVisibility();
+    }
+
+    function updateViewVisibility() {
+        let slidesPerPage = 2;
+        let totalSheets = Math.ceil(slidesModel.length / slidesPerPage);
+
+        const sheets = document.querySelectorAll('.a4-sheet');
+        sheets.forEach((sheet, idx) => {
+            if (idx === currentPreviewPage) {
+                sheet.style.display = 'block';
+                sheet.classList.add('print-active');
+            } else {
+                sheet.style.display = 'none';
+                sheet.classList.remove('print-active');
+            }
+        });
+
+        document.getElementById('pageIndicator').innerText = `الصفحة ${currentPreviewPage + 1} من ${totalSheets}`;
+        document.getElementById('prevBtn').disabled = (currentPreviewPage === 0);
+        document.getElementById('nextBtn').disabled = (currentPreviewPage >= totalSheets - 1);
+
+        const printBtn = document.getElementById('printBtn');
+        if (currentPreviewPage === totalSheets - 1) {
+            printBtn.style.display = 'block';
+        } else {
+            printBtn.style.display = 'none';
+        }
+    }
+
+    function changePreviewPage(delta) {
+        let slidesPerPage = 2;
+        let totalSheets = Math.ceil(slidesModel.length / slidesPerPage);
+        currentPreviewPage += delta;
+        if (currentPreviewPage >= totalSheets) currentPreviewPage = totalSheets - 1;
+        if (currentPreviewPage < 0) currentPreviewPage = 0;
+        updateViewVisibility();
+    }
+
+    function printAllSheets() {
+        const sheets = document.querySelectorAll('.a4-sheet');
+        sheets.forEach(sheet => {
+            sheet.classList.add('print-active');
+            sheet.style.display = 'block';
+        });
+        window.print();
+        updateViewVisibility();
+    }
+
+    function appResize(idx, delta) {
+        slidesModel[idx].widthPct = Math.max(30, Math.min(100, slidesModel[idx].widthPct + delta));
+        renderAppUI();
+    }
+
+    function appMove(idx, dy) {
+        slidesModel[idx].offsetY += dy;
+        renderAppUI();
+    }
+
+    function openCropModal(idx) {
+        editingIdx = idx;
+        let s = slidesModel[idx];
+        document.getElementById('modalTitle').innerText = `قص الشريحة رقم ${s.id}`;
+        document.getElementById('cLeft').value = s.crop.left;
+        document.getElementById('cRight').value = s.crop.right;
+        document.getElementById('cTop').value = s.crop.top;
+        document.getElementById('cBottom').value = s.crop.bottom;
+
+        document.getElementById('cropModal').classList.remove('hidden');
+        updateModalCanvas();
+    }
+
+    function stepCrop(side, delta) {
+        const map = { left: 'cLeft', right: 'cRight', top: 'cTop', bottom: 'cBottom' };
+        const input = document.getElementById(map[side]);
+        let val = (parseInt(input.value) || 0) + delta;
+        input.value = Math.max(0, Math.min(45, val));
+        updateModalCanvas();
+    }
+
+    function updateModalCanvas() {
+        if (editingIdx === null) return;
+        let s = slidesModel[editingIdx];
+        let crop = {
+            left: parseInt(document.getElementById('cLeft').value) || 0,
+            right: parseInt(document.getElementById('cRight').value) || 0,
+            top: parseInt(document.getElementById('cTop').value) || 0,
+            bottom: parseInt(document.getElementById('cBottom').value) || 0
+        };
+
+        let raw = s.rawCanvas;
+        let w = raw.width;
+        let h = raw.height;
+        let cL = Math.round((crop.left / 100) * w);
+        let cR = Math.round((crop.right / 100) * w);
+        let cT = Math.round((crop.top / 100) * h);
+        let cB = Math.round((crop.bottom / 100) * h);
+
+        let newW = Math.max(20, w - cL - cR);
+        let newH = Math.max(20, h - cT - cB);
+
+        let canvas = document.getElementById('modalCanvas');
+        canvas.width = newW;
+        canvas.height = newH;
+        let ctx = canvas.getContext('2d');
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, newW, newH);
+        ctx.drawImage(raw, cL, cT, newW, newH, 0, 0, newW, newH);
+    }
+
+    function saveCropModal() {
+        if (editingIdx === null) return;
+        let s = slidesModel[editingIdx];
+        s.crop = {
+            left: parseInt(document.getElementById('cLeft').value) || 0,
+            right: parseInt(document.getElementById('cRight').value) || 0,
+            top: parseInt(document.getElementById('cTop').value) || 0,
+            bottom: parseInt(document.getElementById('cBottom').value) || 0
+        };
+        s.croppedUrl = getCroppedUrl(s.rawCanvas, s.crop);
+        closeCropModal();
+        renderAppUI();
+    }
+
+    function closeCropModal() {
+        document.getElementById('cropModal').classList.add('hidden');
+        editingIdx = null;
+    }
+</script>
+
+</body>
+</html>
