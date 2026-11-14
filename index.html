@@ -144,17 +144,17 @@
             width: 100% !important;
         }
 
-        /* إطار المعاينة مقيد تماماً بحدود الطباعة مع تنبيه بصري (خط أحمر منقط) لأي تجاوز */
+        /* إطار المعاينة مطابق لصفحة الطباعة تماماً */
         .a4-sheet {
             width: 100%;
             max-width: 580px;
-            height: 400px; /* الارتفاع الدقيق المماثل لصفحة الطباعة */
+            height: 400px;
             background: #ffffff;
             border: 2px solid #000000;
             margin: 0 auto 15px auto;
             box-sizing: border-box;
             position: relative;
-            overflow: visible; /* يسمح برؤية أي تجاوز خارج الحدود لتعرفي أنك خرجتِ عن نطاق الطباعة */
+            overflow: hidden; /* يمنع خروج المحتوى ويثبت الحدود بدقة */
         }
 
         .jadada-table {
@@ -183,17 +183,16 @@
             vertical-align: middle;
         }
 
-        /* مساحة المحتوى مطابقة تماماً لما سيتم طباعته، وإذا خرجت الشريحة ستظهر خارج هذا الإطار */
+        /* مساحة المحتوى مع حد سفلي برتقالي سميك وواضح ليعلمك نهاية الجدول بدقة */
         .content-cell {
             height: 365px;
             max-height: 365px;
             position: relative;
-            overflow: visible; /* لكي تري بوضوح إذا خرجت الشريحة عن الحد المسموح */
+            overflow: hidden;
             padding: 6px !important;
             text-align: left !important;
             background: #ffffff;
-            /* حد أحمر سفلي يوضح نهاية حدود الطباعة تماماً */
-            border-bottom: 2.5px dashed #ef4444; 
+            border-bottom: 3px solid #f97316 !important; /* حد برتقالي يحدد نهاية الجدول في المعاينة */
         }
 
         .slide-item-simple {
@@ -319,7 +318,7 @@
         .btn-save-modal { flex: 2; background: #16a34a; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; }
         .btn-cancel-modal { flex: 1; background: #ef4444; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
-        /* إعدادات الطباعة الدقيقة (A4 Landscape) مع إخفاء الخط الأحمر التنبيهي وعودة الجدول كاملاً */
+        /* إعدادات الطباعة الدقيقة مع إزالة الحد البرتقالي وعودة الجدول كاملاً */
         @media print {
             @page {
                 size: A4 landscape;
@@ -372,7 +371,7 @@
             .content-cell {
                 height: calc(185mm - 26px) !important;
                 max-height: none !important;
-                border-bottom: 1px solid #000000 !important; /* إزالة الخط الأحمر عند الطباعة */
+                border-bottom: 1px solid #000000 !important; /* استبدال الحد البرتقالي بخط أسود عادي عند الطباعة */
             }
             .slide-item-simple {
                 border: none !important;
@@ -530,8 +529,7 @@
 
         const trimW = right - left + 1;
         const trimH = bottom - top + 1;
-
-        const trimmedCanvas = document.createElement('canvas');
+   const trimmedCanvas = document.createElement('canvas');
         trimmedCanvas.width = trimW;
         trimmedCanvas.height = trimH;
         const tCtx = trimmedCanvas.getContext('2d');
@@ -784,3 +782,4 @@
 
 </body>
 </html>
+        
