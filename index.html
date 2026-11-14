@@ -26,7 +26,7 @@
 
         .app-card {
             width: 100%;
-            max-width: 650px;
+            max-width: 680px;
             background: rgba(255, 255, 255, 0.22);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.4);
@@ -144,17 +144,17 @@
             width: 100% !important;
         }
 
-        /* إطار المعاينة مطابق لصفحة الطباعة تماماً */
+        /* إطار المعاينة المضبوط بدقة مع الزيادة المطلوبة */
         .a4-sheet {
             width: 100%;
-            max-width: 580px;
-            height: 400px;
+            max-width: 620px;
+            height: 421px;
             background: #ffffff;
             border: 2px solid #000000;
             margin: 0 auto 15px auto;
             box-sizing: border-box;
             position: relative;
-            overflow: hidden; /* يمنع خروج المحتوى ويثبت الحدود بدقة */
+            overflow: hidden;
         }
 
         .jadada-table {
@@ -183,16 +183,15 @@
             vertical-align: middle;
         }
 
-        /* مساحة المحتوى مع حد سفلي برتقالي سميك وواضح ليعلمك نهاية الجدول بدقة */
         .content-cell {
-            height: 365px;
-            max-height: 365px;
+            height: 386px;
+            max-height: 386px;
             position: relative;
             overflow: hidden;
             padding: 6px !important;
             text-align: left !important;
             background: #ffffff;
-            border-bottom: 3px solid #f97316 !important; /* حد برتقالي يحدد نهاية الجدول في المعاينة */
+            border-bottom: 3px solid #f97316 !important;
         }
 
         .slide-item-simple {
@@ -318,7 +317,6 @@
         .btn-save-modal { flex: 2; background: #16a34a; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; }
         .btn-cancel-modal { flex: 1; background: #ef4444; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
-        /* إعدادات الطباعة الدقيقة مع إزالة الحد البرتقالي وعودة الجدول كاملاً */
         @media print {
             @page {
                 size: A4 landscape;
@@ -371,7 +369,7 @@
             .content-cell {
                 height: calc(185mm - 26px) !important;
                 max-height: none !important;
-                border-bottom: 1px solid #000000 !important; /* استبدال الحد البرتقالي بخط أسود عادي عند الطباعة */
+                border-bottom: 1px solid #000000 !important;
             }
             .slide-item-simple {
                 border: none !important;
@@ -492,6 +490,7 @@
         }
     });
 
+    /* دالة قص الفراغات البيضاء تلقائياً بدقة تامة */
     function autoTrimWhiteMargins(sourceCanvas) {
         const w = sourceCanvas.width;
         const h = sourceCanvas.height;
@@ -529,7 +528,8 @@
 
         const trimW = right - left + 1;
         const trimH = bottom - top + 1;
-   const trimmedCanvas = document.createElement('canvas');
+
+        const trimmedCanvas = document.createElement('canvas');
         trimmedCanvas.width = trimW;
         trimmedCanvas.height = trimH;
         const tCtx = trimmedCanvas.getContext('2d');
@@ -538,6 +538,7 @@
         return trimmedCanvas;
     }
 
+    /* دالة دمج القص التلقائي مع القص اليدوي لضمان سلامة الصورة */
     function getCroppedUrl(rawCanvas, crop) {
         let w = rawCanvas.width;
         let h = rawCanvas.height;
@@ -782,4 +783,3 @@
 
 </body>
 </html>
-        
